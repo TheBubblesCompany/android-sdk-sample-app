@@ -1,0 +1,61 @@
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/colorPrimaryDark"
+  tools:context=".ui.app.MainActivity">
+
+  <LinearLayout
+    android:id="@+id/user_id_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_margin"
+    android:orientation="horizontal">
+
+    <TextView
+      android:id="@+id/user_id_text_view"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_marginEnd="@dimen/default_half_margin"
+      android:gravity="center_vertical|end"
+      android:text="@string/user_id_text_view"
+      android:textColor="@android:color/white"/>
+
+    <EditText
+      android:id="@+id/user_id_edit_text"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_marginStart="@dimen/default_half_margin"
+      android:layout_marginEnd="@dimen/default_half_margin"
+      android:inputType="textEmailAddress"
+      android:textColor="@android:color/white"/>
+
+    <Button
+      android:id="@+id/user_id_button"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_marginStart="@dimen/default_half_margin"
+      android:onClick="onUserIdButtonClick"
+      android:text="@string/user_id_button"/>
+  </LinearLayout>
+
+  <TextView
+    android:id="@+id/services_list_size_text_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/user_id_relative_layout"
+    android:layout_centerHorizontal="true"
+    android:text="@string/services_list_size_text_view"
+    android:textColor="@android:color/white"/>
+
+  <ListView
+    android:id="@+id/services_list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/services_list_size_text_view"
+    android:paddingTop="@dimen/default_margin"/>
+</RelativeLayout>

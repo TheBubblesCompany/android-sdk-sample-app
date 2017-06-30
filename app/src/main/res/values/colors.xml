@@ -1,0 +1,10 @@
+<resources>
+
+  <color name="colorPrimary">#232323</color>
+  <color name="colorPrimaryDark">@android:color/black</color>
+  <color name="colorAccent">#424242</color>
+
+  <color name="colorListBackgroundOdd">#171717</color>
+  <color name="colorListBackgroundEven">#0C0C0C</color>
+
+</resources>

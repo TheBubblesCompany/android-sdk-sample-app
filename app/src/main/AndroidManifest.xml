@@ -1,0 +1,40 @@
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.mybubbles.sdksample">
+
+  <uses-sdk tools:overrideLibrary="com.mybubbles.sdk"/>
+
+  <application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:name=".MyApplication"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme">
+
+    <activity
+      android:label="@string/app_name"
+      android:name=".ui.app.MainActivity"
+      android:theme="@style/AppTheme"
+      android:windowSoftInputMode="stateHidden">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+
+    <!-- MyBubbles SDK Sample API KEY -->
+    <meta-data
+      android:name="com.mybubbles.sdk.key"
+      android:value="d01cf51e58efc86b1340adb509f25e9a"/>
+
+    <!-- MyBubbles SDK Sample Scenarios' Activities -->
+    <activity android:name=".ui.scenarios.MyBubblesServiceActivity"/>
+    <activity android:name=".ui.scenarios.MyBubblesImageActivity"/>
+    <activity android:name=".ui.scenarios.MyBubblesWebViewActivity"/>
+    <activity android:name=".ui.scenarios.MyBubblesUriActivity"/>
+
+  </application>
+
+</manifest>

@@ -1,0 +1,9 @@
+<resources>
+
+  <string name="app_name">MyBubbles SDK Sample</string>
+
+  <string name="user_id_text_view">User ID :</string>
+  <string name="user_id_button">Update</string>
+  <string name="services_list_size_text_view">Waiting Services List…</string>
+
+</resources>
