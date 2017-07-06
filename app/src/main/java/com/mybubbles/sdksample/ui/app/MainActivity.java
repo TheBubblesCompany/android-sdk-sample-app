@@ -60,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  protected void onStop() {
-    super.onStop();
-
+  protected void onDestroy() {
     // Clean Observer
     if (app != null) {
       app.getServicesListObservable().deleteObservers();
@@ -71,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     // Clean Services' List objects
     localServicesList.clear();
     servicesListAdapter = null;
+
+    super.onDestroy();
   }
 
   private class ServicesListObserver implements Observer {
