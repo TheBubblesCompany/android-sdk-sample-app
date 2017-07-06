@@ -1,6 +1,7 @@
 package com.mybubbles.sdksample;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -25,9 +26,12 @@ public class SdkTests {
   private static final int NB_SERVICES_WITHOUT_USER_ID = 1;
   private static final int NB_SERVICES_WITH_USER_ID = 2;
 
-  private static final int API_CALL_WAITING_TIME = 1000;
-  private static final int SERVICE_OPENING_WAITING_TIME = 5000;
-  private static final int PERMISSION_CLICK_WAITING_TIME = 5000;
+  private static final String SERVICES_RECEIVED_1 = "Services List received : 1 service";
+  private static final String SERVICES_RECEIVED_2 = "Services List received : 2 services";
+  private static final int SERVICE_OPENING_WAITING_TIME = 15000;
+
+  private static final String SERVICE_TITLE_FIELD = "serviceId";
+  private static final String SERVICE_TITLE_MATCH = "Service IBC01SRV000000000160 is open.";
 
   private static final String CLOSE_SERVICE_BTN = "closeService";
   private static final String OPEN_URI_BTN = "openURI";
@@ -39,6 +43,7 @@ public class SdkTests {
   private static final String REMOVE_LAST_SCREEN_BTN = "removeLastScreen";
   private static final String SET_SCREENS_LIST_BTN = "setScreensList";
 
+  private static final int PERMISSION_CLICK_WAITING_TIME = 5000;
   private static final String ON_UNIQUE_ID_RECEIVED_FIELD = "onUniqueIdReceived";
   private static final String ON_LOCALIZATION_PERMISSION_CHANGE_FIELD = "onLocalizationPermissionChange";
   private static final String GRANTED_FIELD = "Granted";
@@ -63,13 +68,12 @@ public class SdkTests {
   }
 
   @Test
-  public void testNbServicesWithEmptyUserId() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
+  public void nbServicesWithoutUserId() throws Exception {
+    removeUserId();
+    clickOnConnect();
+
     // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
+    solo.waitForText(SERVICES_RECEIVED_1);
     // Get the Number of Services
     int nbServices = ((ListView) solo.getView(R.id.services_list_view)).getAdapter().getCount();
     // Assert the Number of Services
@@ -77,15 +81,12 @@ public class SdkTests {
   }
 
   @Test
-  public void testNbServicesWithTestUserId() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
+  public void nbServicesWithTestUserId() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+
     // Get the Number of Services
     int nbServices = ((ListView) solo.getView(R.id.services_list_view)).getAdapter().getCount();
     // Assert the Number of Services
@@ -93,39 +94,28 @@ public class SdkTests {
   }
 
   @Test
-  public void testOpenService() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openService() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
   }
 
   @Test
-  public void testOpenServiceThenPressBack() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenPressBack() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Press Back
     solo.goBack();
     // Assert that we are back to the Services' List Activity
@@ -133,21 +123,16 @@ public class SdkTests {
   }
 
   @Test
-  public void testOpenServiceThenCloseService() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenCloseService() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Click on the Close button
     solo.clickOnWebElement(By.id(CLOSE_SERVICE_BTN));
     // Assert that we are back to the Services' List Activity
@@ -155,21 +140,16 @@ public class SdkTests {
   }
 
   @Test
-  public void testOpenServiceThenAskForUniqueId() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenAskForUniqueId() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Click on the Unique ID Permission button
     solo.clickOnWebElement(By.id(ASK_UNIQUE_ID_BTN));
     // Wait that the User click on the ALLOW button... :/
@@ -181,21 +161,16 @@ public class SdkTests {
   }
 
   @Test
-  public void testOpenServiceThenAskForLocalization() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenAskForLocalization() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Click on the Localization Permission button
     solo.clickOnWebElement(By.id(ASK_LOCALIZATION_BTN));
     // Wait that the User click on the ALLOW button... :/
@@ -207,102 +182,135 @@ public class SdkTests {
   }
 
   @Test
-  public void testOpenServiceThenOpenAnotherService() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenOpenAnotherService() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Click on the OpenService button
     solo.clickOnWebElement(By.id(OPEN_SERVICE_BTN));
-    // Assert that we are still in the Service Activity
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+    // Wait that the Service is open & ready
+    solo.sleep(SERVICE_OPENING_WAITING_TIME);
+
+    assertAnyServiceIsOpen();
+
+    // Get the Service Title field
+    WebElement serviceTitle = solo.getWebElement(By.id(SERVICE_TITLE_FIELD), 0);
+    // Assert that the field content is NOT a match, so we know we are in another service
+    assertNotEquals(SERVICE_TITLE_MATCH, serviceTitle.getText());
   }
 
   @Test
-  public void testOpenServiceThenRemoveLastScreen() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
-    // Click on the RemoveLastScreen button
-    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
+  public void openServiceThenRemoveLastScreen() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+    removeServiceLastScreen();
+
     // Assert that we are back to the Services' List Activity
     solo.assertCurrentActivity("The MainActivity is not open.", MainActivity.class);
   }
 
   @Test
-  public void testOpenServiceThenAddScreenThenRemoveLastScreenTwice() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenAddScreenThenRemoveLastScreenTwice() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Click on the AddScreen button
     solo.clickOnWebElement(By.id(ADD_SCREEN_BTN));
     solo.sleep(500);
-    // Click on the RemoveLastScreen button twice
-    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
-    solo.sleep(500);
-    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
+
+    removeServiceLastScreen();
+    removeServiceLastScreen();
+
     // Assert that we are back to the Services' List Activity
     solo.assertCurrentActivity("The MainActivity is not open.", MainActivity.class);
   }
 
   @Test
-  public void testOpenServiceThenSetScreensListThenRemoveLastScreenThrice() throws Exception {
-    // Empty the User ID EditText
-    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
-    // Type User ID in EditText
-    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
-    // Click on Connect button
-    solo.clickOnView(solo.getView(R.id.user_id_button));
-    // Wait for the API call
-    solo.sleep(API_CALL_WAITING_TIME);
-    // Click on first row in Services' list
-    solo.clickInList(2, 0);
-    // Wait that the Service is open & ready
-    solo.sleep(SERVICE_OPENING_WAITING_TIME);
-    // Assert that the Service Activity is open
-    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  public void openServiceThenSetScreensListThenRemoveLastScreenThrice() throws Exception {
+    removeUserId();
+    putTestUserId();
+    clickOnConnect();
+    waitTestApiCall();
+    clickTestService();
+    waitTestServiceIsOpen();
+    assertAnyServiceIsOpen();
+    assertTestServiceIsOpen();
+
     // Click on the SetScreensList button
     solo.clickOnWebElement(By.id(SET_SCREENS_LIST_BTN));
     solo.sleep(500);
-    // Click on the RemoveLastScreen button thrice
-    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
-    solo.sleep(500);
-    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
-    solo.sleep(500);
-    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
+
+    removeServiceLastScreen();
+    removeServiceLastScreen();
+    removeServiceLastScreen();
+
     // Assert that we are back to the Services' List Activity
     solo.assertCurrentActivity("The MainActivity is not open.", MainActivity.class);
+  }
+
+  private void removeUserId() {
+    // Empty the User ID EditText
+    solo.clearEditText((EditText) solo.getView(R.id.user_id_edit_text));
+  }
+
+  private void putTestUserId() {
+    // Type User ID in EditText
+    solo.enterText((EditText) solo.getView(R.id.user_id_edit_text), USER_ID);
+  }
+
+  private void clickOnConnect() {
+    // Click on Connect button
+    solo.clickOnView(solo.getView(R.id.user_id_button));
+  }
+
+  private void waitTestApiCall() {
+    // Wait for the API call
+    solo.waitForText(SERVICES_RECEIVED_2);
+  }
+
+  private void clickTestService() {
+    // Click on second row in Services' list
+    solo.clickInList(2, 0);
+  }
+
+  private void waitTestServiceIsOpen() {
+    // Wait that the Service is open & ready
+    solo.waitForText(SERVICE_TITLE_MATCH);
+  }
+
+  private void assertAnyServiceIsOpen() {
+    // Assert that the Service Activity is open
+    solo.assertCurrentActivity("The MyBubblesServiceActivity is not open.", MyBubblesServiceActivity.class);
+  }
+
+  private void assertTestServiceIsOpen() {
+    // Get the Service Title field
+    WebElement serviceTitle = solo.getWebElement(By.id(SERVICE_TITLE_FIELD), 0);
+    // Assert that the field content is a match, so we know we are in the right service
+    assertEquals(SERVICE_TITLE_MATCH, serviceTitle.getText());
+  }
+
+  private void removeServiceLastScreen() {
+    // Click on the RemoveLastScreen button
+    solo.clickOnWebElement(By.id(REMOVE_LAST_SCREEN_BTN));
+    solo.sleep(500);
   }
 }
