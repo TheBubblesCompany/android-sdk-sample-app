@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import com.mybubbles.sdk.helpers.UriHelper;
 import com.mybubbles.sdksample.R;
 import com.squareup.picasso.Picasso;
 
@@ -105,5 +106,19 @@ public class MyBubblesImageActivity extends Activity {
         }
       }
     });
+  }
+
+  /**
+   * Opens default activity if this is currently top activity
+   */
+  @Override
+  public void onBackPressed() {
+    if (isTaskRoot()) {
+      finish();
+
+      startActivity(UriHelper.getDefaultActivityIntent(getApplicationContext()));
+    } else {
+      super.onBackPressed();
+    }
   }
 }

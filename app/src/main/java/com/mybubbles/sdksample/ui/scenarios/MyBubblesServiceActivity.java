@@ -3,6 +3,7 @@ package com.mybubbles.sdksample.ui.scenarios;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.mybubbles.sdk.helpers.UriHelper;
 import com.mybubbles.sdk.hybrid.MyBubblesServiceInterface;
 import com.mybubbles.sdk.hybrid.MyBubblesServiceLayout;
 import com.mybubbles.sdk.utils.MyBubblesException;
@@ -39,21 +40,40 @@ public class MyBubblesServiceActivity extends Activity implements MyBubblesServi
     }
   }
 
-  // The Service has timeout, the Activity should probably be closed now
+  /**
+   * The Service has timeout, the Activity should probably be closed now.
+   * If service was opened from background, we open default activity.
+   */
   @Override
   public void onServiceHasTimeout() {
     finish();
+
+    if (isTaskRoot()) {
+      startActivity(UriHelper.getDefaultActivityIntent(getApplicationContext()));
+    }
   }
 
-  // The Service is finished, the Activity should probably be closed now
+  /**
+   * The Service is finished, the Activity should probably be closed now.
+   * If service was opened from background, we open default activity.
+   */
   @Override
   public void onServiceIsFinished() {
     finish();
+
+    if (isTaskRoot()) {
+      startActivity(UriHelper.getDefaultActivityIntent(getApplicationContext()));
+    }
   }
 
-  // The currently opened Service wants to open a new Service
+  /**
+   * The currently opened Service wants to open a new Service
+   *
+   * @param serviceID Service identifier
+   */
   @Override
   public void onNewServiceNeedsToBeStarted(String serviceID) {
+    finish();
     startActivity(new Intent(this, MyBubblesServiceActivity.class).putExtra("myBubblesServiceID", serviceID));
   }
 

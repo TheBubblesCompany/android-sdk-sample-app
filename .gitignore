@@ -43,3 +43,6 @@ captures/
 # Intellij
 *.iml
 .idea/
+
+# Mac OS
+.DS_Store
