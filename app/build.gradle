@@ -33,5 +33,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
 
     // MyBubbles SDK
-    compile 'com.mybubbles.sdk:android-sdk:2.5.1'
+    compile project(':android-sdk')
+    // compile 'com.mybubbles.sdk:android-sdk:2.5.1'
 }

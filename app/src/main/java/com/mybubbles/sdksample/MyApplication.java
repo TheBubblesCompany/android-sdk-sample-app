@@ -2,15 +2,9 @@ package com.mybubbles.sdksample;
 
 import android.util.Log;
 import com.mybubbles.sdk.instance.MyBubblesApplication;
-import com.mybubbles.sdk.instance.MyBubblesInterface;
 import com.mybubbles.sdk.instance.MyBubblesSDK;
 import com.mybubbles.sdk.objects.MyBubblesService;
 import com.mybubbles.sdksample.observers.ServicesListObservable;
-import com.mybubbles.sdksample.ui.app.MainActivity;
-import com.mybubbles.sdksample.ui.scenarios.MyBubblesImageActivity;
-import com.mybubbles.sdksample.ui.scenarios.MyBubblesServiceActivity;
-import com.mybubbles.sdksample.ui.scenarios.MyBubblesUriActivity;
-import com.mybubbles.sdksample.ui.scenarios.MyBubblesWebViewActivity;
 import com.mybubbles.sdksample.utils.MySharedPrefs;
 import java.util.ArrayList;
 import java.util.List;
