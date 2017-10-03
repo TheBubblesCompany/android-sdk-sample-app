@@ -1,11 +1,13 @@
 package com.mybubbles.sdksample.ui.app;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     app = (MyApplication) getApplication();
     addObserver();
     initializeMyBubblesSdk();
+
+    MyBubblesSDK myBubblesSDK = MyBubblesSDK.getInstance();
+    myBubblesSDK.addMagicButton(this, "8d02065b7848638f44a1313ad889213e");
   }
 
   private void addObserver() {
@@ -71,6 +76,26 @@ public class MainActivity extends AppCompatActivity {
     servicesListAdapter = null;
 
     super.onDestroy();
+  }
+
+  public void onPage1ButtonClick(View view) {
+    Intent intent = new Intent(this, Page1Activity.class);
+    startActivity(intent);
+  }
+
+  public void onPage2ButtonClick(View view) {
+    Intent intent = new Intent(this, Page2Activity.class);
+    startActivity(intent);
+  }
+
+  public void onPage3ButtonClick(View view) {
+    Intent intent = new Intent(this, Page3Activity.class);
+    startActivity(intent);
+  }
+
+  public void onPage4ButtonClick(View view) {
+    Intent intent = new Intent(this, Page4Activity.class);
+    startActivity(intent);
   }
 
   private class ServicesListObserver implements Observer {
