@@ -8,6 +8,7 @@ import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import com.mybubbles.sdk.helpers.UriHelper;
 import com.mybubbles.sdksample.R;
 
 public class MyBubblesWebViewActivity extends Activity {
@@ -53,5 +54,18 @@ public class MyBubblesWebViewActivity extends Activity {
     });
     WebSettings webSettings = webView.getSettings();
     webSettings.setJavaScriptEnabled(true);
+  }
+
+  /**
+   * Opens default activity if this is currently top activity
+   */
+  @Override
+  public void onBackPressed() {
+    if (isTaskRoot()) {
+      finish();
+      startActivity(UriHelper.getDefaultActivityIntent(getApplicationContext()));
+    } else {
+      super.onBackPressed();
+    }
   }
 }
