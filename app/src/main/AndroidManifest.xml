@@ -22,6 +22,63 @@
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+          android:host="bubbles.main"
+          android:scheme="${applicationId}"/>
+      </intent-filter>
+    </activity>
+
+    <!-- MyBubbles SDK Sample Scenarios' Activities -->
+    <activity android:name=".ui.scenarios.MyBubblesServiceActivity">
+      <intent-filter>
+        <action android:name="com.mybubbles.sdk.intent.action.scenario"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+          android:host="bubbles.scenario"
+          android:pathPrefix="/service"
+          android:scheme="${applicationId}"/>
+      </intent-filter>
+    </activity>
+
+    <activity android:name=".ui.scenarios.MyBubblesImageActivity">
+      <intent-filter>
+        <action android:name="com.mybubbles.sdk.intent.action.scenario"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+          android:host="bubbles.scenario"
+          android:pathPrefix="/image"
+          android:scheme="${applicationId}"/>
+      </intent-filter>
+    </activity>
+
+    <activity android:name=".ui.scenarios.MyBubblesWebViewActivity">
+      <intent-filter>
+        <action android:name="com.mybubbles.sdk.intent.action.scenario"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+          android:host="bubbles.scenario"
+          android:pathPrefix="/webview"
+          android:scheme="${applicationId}"/>
+      </intent-filter>
+    </activity>
+
+    <activity android:name=".ui.scenarios.MyBubblesUriActivity">
+      <intent-filter>
+        <action android:name="com.mybubbles.sdk.intent.action.scenario"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data
+          android:host="bubbles.scenario"
+          android:pathPrefix="/uri"
+          android:scheme="${applicationId}"/>
+      </intent-filter>
     </activity>
 
     <!-- MyBubbles SDK Sample API KEY -->
@@ -29,12 +86,17 @@
       android:name="com.mybubbles.sdk.key"
       android:value="d01cf51e58efc86b1340adb509f25e9a"/>
 
-    <!-- MyBubbles SDK Sample Scenarios' Activities -->
-    <activity android:name=".ui.scenarios.MyBubblesServiceActivity"/>
-    <activity android:name=".ui.scenarios.MyBubblesImageActivity"/>
-    <activity android:name=".ui.scenarios.MyBubblesWebViewActivity"/>
-    <activity android:name=".ui.scenarios.MyBubblesUriActivity"/>
+    <receiver android:name=".receivers.FetchServicesReceiver">
+      <intent-filter>
+        <action android:name="com.mybubbles.sdk.intent.action.FETCH_SERVICE"/>
+      </intent-filter>
+    </receiver>
+
+    <receiver android:name=".receivers.NetworkNotAvailable">
+      <intent-filter>
+        <action android:name="com.mybubbles.sdk.intent.action.NETWORK_NOT_AVAILABLE"/>
+      </intent-filter>
+    </receiver>
 
   </application>
-
 </manifest>

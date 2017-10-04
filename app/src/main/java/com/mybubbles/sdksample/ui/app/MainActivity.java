@@ -42,20 +42,12 @@ public class MainActivity extends AppCompatActivity {
     // Init
     app = (MyApplication) getApplication();
     addObserver();
-    initializeMyBubblesSdk();
   }
 
   private void addObserver() {
     if (app != null) {
       // Add Services' List observer
       app.getServicesListObservable().addObserver(new ServicesListObserver());
-    }
-  }
-
-  private void initializeMyBubblesSdk() {
-    if (app != null) {
-      // Init SDK
-      app.initializeMyBubblesSdk();
     }
   }
 
@@ -88,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
   protected void onResume() {
     super.onResume();
 
-    // Put back UserId in EditText field when re-opening the App
+    // Put UserId in EditText field when opening the App
     ((EditText) findViewById(R.id.user_id_edit_text)).setText(MySharedPrefs.readStr(MySharedPrefs.USER_ID));
 
-    // Display Services' List when re-opening the App
+    // Display Services' List when opening the App
     if (app.getServicesList() != null) {
       onServicesListReceived();
     }
@@ -102,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     // Display number of Services
     int nbServices = app.getServicesList().size();
     Log.e("onServicesListReceived", nbServices + " service(s) received");
-    TextView servicesListSizeTextView = (TextView) findViewById(R.id.services_list_size_text_view);
+    TextView servicesListSizeTextView = findViewById(R.id.services_list_size_text_view);
     if (nbServices < 1) {
       servicesListSizeTextView.setText("Services List received : It's empty !");
     } else if (nbServices == 1) {
@@ -145,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
       ((TextView) convertView.findViewById(R.id.title)).setText(service.name);
       ((TextView) convertView.findViewById(R.id.desc)).setText(service.description);
 
-      LinearLayout background = (LinearLayout) convertView.findViewById(R.id.services_list_adapter_parent_layout);
+      LinearLayout background = convertView.findViewById(R.id.services_list_adapter_parent_layout);
       if (position % 2 == 0) {
         background.setBackgroundColor(getResources().getColor(R.color.colorListBackgroundOdd));
       } else {
@@ -167,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
   public void onUserIdButtonClick(View view) {
     closeKeyboard();
 
-    EditText userIdEditText = (EditText) findViewById(R.id.user_id_edit_text);
+    EditText userIdEditText = findViewById(R.id.user_id_edit_text);
     String userId = userIdEditText.getText().toString();
     Log.e("onUserIdButtonClick", "User ID : [" + userId + "]");
 
