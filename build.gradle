@@ -3,8 +3,8 @@ buildscript {
 
     repositories { jcenter() }
 
-    // NOTE: Do not place your application dependencies here;
-    // they belong in the individual module build.gradle files
+    // NOTE: Do not place your application dependencies here.
+    // They belong in the individual module build.gradle files.
     dependencies { classpath 'com.android.tools.build:gradle:2.3.3' }
 }
 
