@@ -21,6 +21,7 @@ public class MyApplication extends MyBubblesApplication {
     super.onCreate();
 
     MySharedPrefs.init(this);
+    initializeMyBubblesSdk();
   }
 
   public List<MyBubblesService> getServicesList() {
@@ -31,7 +32,7 @@ public class MyApplication extends MyBubblesApplication {
     return servicesListObservable;
   }
 
-  public void initializeMyBubblesSdk() {
+  private void initializeMyBubblesSdk() {
 
     final String userID = "#test";
     final boolean forceLocationPermission = true;

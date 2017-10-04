@@ -20,6 +20,4 @@ public class FetchServicesReceiver extends FetchServicesReceiverAbstract {
       myApplication.getServicesListObservable().trigger();
     }
   }
-
-
 }
