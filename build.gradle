@@ -9,14 +9,10 @@ buildscript {
 }
 
 allprojects {
-
     repositories {
         jcenter()
         maven { url 'https://maven.google.com' }
     }
-
-    // "debug" for dev, "release" for prod
-    project.ext { myBuildType = "debug" }
 }
 
 task clean(type: Delete) { delete rootProject.buildDir }
