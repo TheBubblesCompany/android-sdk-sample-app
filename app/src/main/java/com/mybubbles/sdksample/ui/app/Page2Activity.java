@@ -6,13 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 import com.mybubbles.sdk.instance.MyBubblesSDK;
+import com.mybubbles.sdk.magic_button.exception.MagicButtonException;
 import com.mybubbles.sdksample.R;
 
 /**
  * @author Aurélien SEMENCE <aurelien.semence@bubbles-company.com>
  */
 public class Page2Activity extends AppCompatActivity {
+  private boolean magicButtonDisplayed = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +30,29 @@ public class Page2Activity extends AppCompatActivity {
       actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    MyBubblesSDK myBubblesSDK = MyBubblesSDK.getInstance();
-    myBubblesSDK.addMagicButton(this, "b51ddc997546f116df73b8deb39fcbca");
+    final MyBubblesSDK myBubblesSDK = MyBubblesSDK.getInstance();
+    myBubblesSDK.registerMagicButton(this, "b51ddc997546f116df73b8deb39fcbca");
+
+    Button toggleButton = (Button) findViewById(R.id.page2_toggle_magic_button);
+    toggleButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        try {
+          if (!magicButtonDisplayed) {
+            myBubblesSDK.displayMagicButton(Page2Activity.this, "b51ddc997546f116df73b8deb39fcbca");
+          } else {
+            myBubblesSDK.hideMagicButton(Page2Activity.this, "b51ddc997546f116df73b8deb39fcbca");
+          }
+          magicButtonDisplayed = !magicButtonDisplayed;
+        } catch (MagicButtonException exception) {
+          showErrorMessage(exception.getMessage());
+        }
+      }
+    });
+  }
+
+  private void showErrorMessage(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
 
   @Override

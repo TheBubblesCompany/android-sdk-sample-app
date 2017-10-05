@@ -3,11 +3,20 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
   <TextView
+    android:id="@+id/page2_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:text="@string/page_name_2" />
+  <Button
+    android:id="@+id/page2_toggle_magic_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_below="@id/page2_title"
+    android:layout_centerHorizontal="true"
+    android:text="@string/page2_magic_button_toggle" />
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

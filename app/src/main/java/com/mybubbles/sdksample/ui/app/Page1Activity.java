@@ -24,6 +24,9 @@ public class Page1Activity extends AppCompatActivity {
     if (actionBar != null) {
       actionBar.setDisplayHomeAsUpEnabled(true);
     }
+    MyBubblesSDK myBubblesSDK = MyBubblesSDK.getInstance();
+    myBubblesSDK.addMagicButton(this, "ab15be9050ce23b6efb7d7c8e4c3858f");
+    myBubblesSDK.addMagicButton(this, "0a5b3913cbc9a9092311630e869b4442");
   }
 
   @Override

@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     MyBubblesSDK myBubblesSDK = MyBubblesSDK.getInstance();
     myBubblesSDK.addMagicButton(this, "8d02065b7848638f44a1313ad889213e");
+    myBubblesSDK.addMagicButton(this, "b51ddc997546f116df73b8deb39fcbca");
   }
 
   private void addObserver() {
