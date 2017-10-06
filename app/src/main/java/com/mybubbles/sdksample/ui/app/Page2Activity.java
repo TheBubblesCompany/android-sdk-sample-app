@@ -31,6 +31,7 @@ public class Page2Activity extends AppCompatActivity {
     }
 
     final MyBubblesSDK myBubblesSDK = MyBubblesSDK.getInstance();
+    myBubblesSDK.addMagicButton(this, "8d02065b7848638f44a1313ad889213e");
     myBubblesSDK.registerMagicButton(this, "b51ddc997546f116df73b8deb39fcbca");
 
     Button toggleButton = (Button) findViewById(R.id.page2_toggle_magic_button);
