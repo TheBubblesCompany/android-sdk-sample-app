@@ -43,7 +43,7 @@
     <!-- MyBubbles SDK Sample API KEY -->
     <meta-data
       android:name="com.mybubbles.sdk.key"
-      android:value="75710ba39fe2b4f0a9fd38ebc645fcfc" />
+      android:value="d01cf51e58efc86b1340adb509f25e9a" />
 
     <!-- MyBubbles SDK Sample Scenarios' Activities -->
     <activity android:name=".ui.scenarios.MyBubblesServiceActivity" />
