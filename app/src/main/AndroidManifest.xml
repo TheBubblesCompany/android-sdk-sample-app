@@ -1,9 +1,8 @@
-<manifest
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   package="com.mybubbles.sdksample">
 
-  <uses-sdk tools:overrideLibrary="com.mybubbles.sdk"/>
+  <uses-sdk tools:overrideLibrary="com.mybubbles.sdk" />
 
   <application
     android:allowBackup="true"
@@ -19,21 +18,38 @@
       android:theme="@style/AppTheme"
       android:windowSoftInputMode="stateHidden">
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-        <category android:name="android.intent.category.LAUNCHER"/>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <activity
+      android:name=".ui.app.Page1Activity"
+      android:parentActivityName=".ui.app.MainActivity"
+      android:theme="@style/AppTheme" />
+    <activity
+      android:name=".ui.app.Page2Activity"
+      android:parentActivityName=".ui.app.MainActivity"
+      android:theme="@style/AppTheme" />
+    <activity
+      android:name=".ui.app.Page3Activity"
+      android:parentActivityName=".ui.app.MainActivity"
+      android:theme="@style/Fullscreen" />
+    <activity
+      android:name=".ui.app.Page4Activity"
+      android:parentActivityName=".ui.app.MainActivity"
+      android:theme="@style/AppTheme" />
 
     <!-- MyBubbles SDK Sample API KEY -->
     <meta-data
       android:name="com.mybubbles.sdk.key"
-      android:value="d01cf51e58efc86b1340adb509f25e9a"/>
+      android:value="d01cf51e58efc86b1340adb509f25e9a" />
 
     <!-- MyBubbles SDK Sample Scenarios' Activities -->
-    <activity android:name=".ui.scenarios.MyBubblesServiceActivity"/>
-    <activity android:name=".ui.scenarios.MyBubblesImageActivity"/>
-    <activity android:name=".ui.scenarios.MyBubblesWebViewActivity"/>
-    <activity android:name=".ui.scenarios.MyBubblesUriActivity"/>
+    <activity android:name=".ui.scenarios.MyBubblesServiceActivity" />
+    <activity android:name=".ui.scenarios.MyBubblesImageActivity" />
+    <activity android:name=".ui.scenarios.MyBubblesWebViewActivity" />
+    <activity android:name=".ui.scenarios.MyBubblesUriActivity" />
 
   </application>
 

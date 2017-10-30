@@ -5,5 +5,11 @@
   <string name="user_id_text_view">User ID :</string>
   <string name="user_id_button">Update</string>
   <string name="services_list_size_text_view">Waiting Services List…</string>
+  <string name="page_name_1">Page 1</string>
+  <string name="page_name_2">Page 2</string>
+  <string name="page_name_3">Page 3</string>
+  <string name="page_close">Close page</string>
+  <string name="page_name_4">Page 4</string>
+  <string name="page2_magic_button_toggle">Toggle Magic button</string>
 
 </resources>

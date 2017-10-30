@@ -43,11 +43,42 @@
       android:text="@string/user_id_button"/>
   </LinearLayout>
 
+  <LinearLayout
+    android:id="@+id/page_buttons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/user_id_relative_layout"
+    android:layout_centerHorizontal="true"
+    android:layout_marginStart="@dimen/default_half_margin"
+    android:layout_marginEnd="@dimen/default_half_margin">
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="onPage1ButtonClick"
+      android:text="@string/page_name_1"/>
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="onPage2ButtonClick"
+      android:text="@string/page_name_2"/>
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="onPage3ButtonClick"
+      android:text="@string/page_name_3"/>
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="onPage4ButtonClick"
+      android:text="@string/page_name_4"/>
+  </LinearLayout>
+
   <TextView
     android:id="@+id/services_list_size_text_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@id/user_id_relative_layout"
+    android:layout_below="@id/page_buttons"
     android:layout_centerHorizontal="true"
     android:text="@string/services_list_size_text_view"
     android:textColor="@android:color/white"/>

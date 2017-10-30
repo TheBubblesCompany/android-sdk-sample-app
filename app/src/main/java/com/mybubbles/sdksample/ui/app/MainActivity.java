@@ -73,6 +73,26 @@ public class MainActivity extends AppCompatActivity {
     super.onDestroy();
   }
 
+  public void onPage1ButtonClick(View view) {
+    Intent intent = new Intent(this, Page1Activity.class);
+    startActivity(intent);
+  }
+
+  public void onPage2ButtonClick(View view) {
+    Intent intent = new Intent(this, Page2Activity.class);
+    startActivity(intent);
+  }
+
+  public void onPage3ButtonClick(View view) {
+    Intent intent = new Intent(this, Page3Activity.class);
+    startActivity(intent);
+  }
+
+  public void onPage4ButtonClick(View view) {
+    Intent intent = new Intent(this, Page4Activity.class);
+    startActivity(intent);
+  }
+
   private class ServicesListObserver implements Observer {
 
     @Override

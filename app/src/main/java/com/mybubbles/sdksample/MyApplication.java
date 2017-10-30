@@ -75,7 +75,7 @@ public class MyApplication extends MyBubblesApplication {
   public void initializeMyBubblesSdk() {
 
     final String userID = null;
-    final boolean forceLocationPermission = false;
+    final boolean forceLocationPermission = true;
 
     // Initialize the MyBubbles SDK Singleton Instance
     MyBubblesSDK.createInstance(this, myBubblesInterface, userID, forceLocationPermission);
