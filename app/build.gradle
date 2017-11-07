@@ -30,7 +30,7 @@ dependencies {
     compile 'com.android.support:percent:26.1.0'
 
     // MyBubbles SDK
-    compile 'com.mybubbles.sdk:android-sdk:2.6.3'
+    compile 'com.mybubbles.sdk:android-sdk:2.6.4'
 
     // Tests
     androidTestCompile 'junit:junit:4.12'
